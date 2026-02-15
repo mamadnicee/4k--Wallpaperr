@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Drxtuning | 4K AI Art</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a1a1a;
+  --card:#222;
+  --accent:#ff6a00;
+  --text:#f5f5f5;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+body{background:var(--bg);color:var(--text);}
+header{
+  text-align:center;
+  padding:30px 20px;
+}
+.logo{
+  font-size:42px;
+  font-weight:900;
+  letter-spacing:3px;
+  background:linear-gradient(90deg,var(--accent),#ffa94d);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 25px rgba(255,106,0,0.5);
+}
+.tagline{
+  margin-top:10px;
+  font-weight:300;
+  opacity:.7;
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px;
+}
+.card{
+  background:var(--card);
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.upload-area{
+  border:2px dashed var(--accent);
+  padding:30px;
+  text-align:center;
+  border-radius:12px;
+  cursor:pointer;
+  transition:.3s;
+}
+.upload-area:hover{background:rgba(255,106,0,.05);}
+input[type="file"]{display:none;}
+.preview{
+  margin-top:20px;
+  text-align:center;
+}
+canvas{
+  max-width:100%;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.controls{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+.buy-btn{
+  background:linear-gradient(90deg,var(--accent),#ff8c1a);
+  color:#fff;
+  box-shadow:0 0 20px rgba(255,106,0,.6);
+}
+.buy-btn:hover{transform:scale(1.05);}
+.download-section{
+  margin-top:20px;
+  display:none;
+  text-align:center;
+}
+footer{
+  margin-top:50px;
+  text-align:center;
+  padding:20px;
+  font-size:14px;
+  opacity:.6;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Drxtuning</div>
+  <div class="tagline">Premium AI 4K Visual Experience</div>
+</header>
+
+<div class="container">
+  <div class="card">
+    
+    <label class="upload-area">
+      Upload 4K Image
+      <input type="file" id="imageUpload" accept="image/*">
+    </label>
+
+    <div class="preview">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="controls">
+      <button class="buy-btn" onclick="startPayment()">BUY (5 USDT)</button>
+    </div>
+
+    <div class="download-section" id="downloadSection">
+      <a id="downloadLink" download="Drxtuning-4K.png">
+        <button class="buy-btn">Download 4K</button>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+© 2026 Drxtuning — All AI Generated Visuals
+</footer>
+
+<script>
+const upload = document.getElementById('imageUpload');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let originalImage = new Image();
+
+upload.addEventListener('change', function(e){
+  const reader = new FileReader();
+  reader.onload = function(event){
+    originalImage.onload = function(){
+      canvas.width = originalImage.width;
+      canvas.height = originalImage.height;
+      ctx.drawImage(originalImage,0,0);
+      addWatermark();
+    }
+    originalImage.src = event.target.result;
+  }
+  reader.readAsDataURL(e.target.files[0]);
+});
+
+function addWatermark(){
+  ctx.font = "bold 60px Inter";
+  ctx.fillStyle = "rgba(255,106,0,0.4)";
+  ctx.textAlign = "center";
+  ctx.fillText("Drxtuning", canvas.width/2, canvas.height/2);
+}
+
+function startPayment(){
+  // مثال لینک پرداخت کریپتو (جایگزین کن با NOWPayments یا هر سرویس)
+  const paymentURL = "https://nowpayments.io/payment/?iid=YOUR_ID";
+  window.open(paymentURL, "_blank");
+
+  // شبیه‌سازی تایید پرداخت بعد 5 ثانیه (برای تست)
+  setTimeout(()=>{
+    document.getElementById("downloadSection").style.display="block";
+    document.getElementById("downloadLink").href = canvas.toDataURL();
+  },5000);
+}
+</script>
+
+</body>
+</html>
